@@ -63,12 +63,12 @@ const App: React.FC = () => {
     <div className="flex h-screen w-full bg-slate-50">
       <aside className="w-64 bg-slate-900 text-white flex flex-col shadow-2xl">
         <div className="p-6 flex items-center space-x-3">
-          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20">
             <Zap className="text-white w-5 h-5 fill-current" />
           </div>
           <div>
-            <h1 className="font-bold text-lg tracking-tight">GLP新能源</h1>
-            <p className="text-xs text-slate-400 font-medium uppercase tracking-wider">Business & Finance</p>
+            <h1 className="font-black text-lg tracking-tight">GLP新能源</h1>
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em]">Biz-Finance Hub</p>
           </div>
         </div>
         
@@ -77,12 +77,12 @@ const App: React.FC = () => {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
-              className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
-                activeTab === item.id ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50' : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-300 ${
+                activeTab === item.id ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 scale-[1.02]' : 'text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
               <item.icon size={18} />
-              <span className="font-medium text-sm">{item.label}</span>
+              <span className="font-bold text-sm">{item.label}</span>
             </button>
           ))}
         </nav>
@@ -93,8 +93,8 @@ const App: React.FC = () => {
               <img src="https://picsum.photos/100/100?random=1" alt="Avatar" />
             </div>
             <div className="flex-1 overflow-hidden">
-              <p className="text-sm font-semibold truncate">财务管理员</p>
-              <p className="text-[10px] text-slate-500 truncate uppercase tracking-widest">Administrator</p>
+              <p className="text-sm font-bold truncate">财务管理员</p>
+              <p className="text-[10px] text-slate-500 truncate uppercase tracking-widest font-black">SAP Pro</p>
             </div>
           </div>
         </div>
@@ -102,29 +102,29 @@ const App: React.FC = () => {
 
       <main className="flex-1 flex flex-col overflow-hidden">
         <header className="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between shadow-sm z-10">
-          <div className="flex items-center space-x-2 text-slate-400 text-sm">
-            <span>首页</span>
+          <div className="flex items-center space-x-2 text-slate-400 text-sm font-medium">
+            <span>主页</span>
             <ChevronRight size={14} />
-            <span className="text-slate-900 font-semibold tracking-wide">
+            <span className="text-slate-900 font-bold">
               {navItems.find(n => n.id === activeTab)?.label}
             </span>
           </div>
           <div className="flex items-center space-x-6">
              {loading && (
-               <div className="flex items-center space-x-2 text-emerald-600 font-bold text-xs">
+               <div className="flex items-center space-x-2 text-emerald-600 font-black text-[10px] uppercase tracking-widest">
                  <RefreshCw size={14} className="animate-spin" />
-                 <span>系统通信中 (SAP/Xihe API)...</span>
+                 <span>系统连接中...</span>
                </div>
              )}
-             <div className="flex items-center space-x-2 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+             <div className="flex items-center space-x-2 bg-slate-100 px-4 py-1.5 rounded-full border border-slate-200">
                <ShieldCheck size={16} className="text-emerald-500" />
-               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">TLS 1.3 Secure</span>
+               <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Enterprise Secure</span>
              </div>
           </div>
         </header>
 
         <div className="flex-1 overflow-y-auto p-8 bg-slate-50/50">
-          <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             {renderContent()}
           </div>
         </div>
