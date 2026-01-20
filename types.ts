@@ -2,25 +2,26 @@
 export enum WorkflowStatus {
   DRAFT = '草稿',
   ACCRUED = '已暂估',
-  SETTLED = '已结算',
+  SYNCED = '已同步数据', // Data from O&M pulled
+  SETTLED = '已结算',    // Bill generated and confirmed
   INVOICED = '已开票',
   CLEARED = '已核销'
 }
 
 export interface ContractRule {
   type: string;
-  discount: number; // e.g., 0.9 for 90%
+  discount: number;
   description: string;
 }
 
 export interface ContractDetails {
   partyA: string;
   partyB: string;
-  gridPoint: string; // 关口计量点
-  meteringMethod: string; // 计量方式 (e.g. 高供高计)
-  billingFormula: string; // P = Q * A
-  billingDay: string; // 抄表日
-  paymentDay: string; // 付款日
+  gridPoint: string;
+  meteringMethod: string;
+  billingFormula: string;
+  billingDay: string;
+  paymentDay: string;
   taxRate: string;
 }
 
@@ -32,15 +33,8 @@ export interface Project {
   client: string;
   rule: ContractRule;
   details: ContractDetails;
-}
-
-export interface SubjectMapping {
-  id: string;
-  businessType: string;
-  subjectCode: string;
-  subjectName: string;
-  direction: 'Debit' | 'Credit';
-  description: string;
+  region: string;
+  status: 'Active' | 'Under Construction';
 }
 
 export interface TouPricingDetail {
@@ -60,11 +54,11 @@ export interface TouDataExtended {
 export interface RevenueRecord {
   id: string;
   month: string;
-  billingCycle: string; // e.g. "2025.07.31 - 2025.08.31"
+  billingCycle: string;
   projectId: string;
   projectName: string;
   spvName: string;
-  omUnit: string; // 运维单位
+  omUnit: string;
   customerName: string;
   status: WorkflowStatus;
   
@@ -73,28 +67,43 @@ export interface RevenueRecord {
   accrualAmount: number;
   accrualExclTax: number;
   accrualTax: number;
-  accrualDate?: string;
   accrualStartDate: string;
   accrualEndDate: string;
   
-  // Actual settlement data
+  // Settlement data
   actualKwhDetail: TouDataExtended;
-  totalGeneration: number;   // 总发电量
-  selfUseKwh: number;       // 自用电量
-  reverseUseKwh: number;    // 反向设备用电
-  gridExportKwh: number;    // 上网电量
-  consumptionRatio: string; // 消纳比
+  totalGeneration: number;
+  selfUseKwh: number;
+  reverseUseKwh: number;
+  gridExportKwh: number;
+  consumptionRatio: string;
   
-  settlementAmount: number; // 实收电费
-  receivableAmount: number; // 应收电费
-  savingsAmount: number;    // 节省电费
+  settlementAmount: number;
+  receivableAmount: number;
+  savingsAmount: number;
   settlementDate?: string;
   
-  // Invoicing
   invoiceNo?: string;
   invoiceDate?: string;
-  
-  // Clearing
   paymentAmount?: number;
   clearingDate?: string;
+  
+  syncTime?: string; // When O&M data was pulled
+}
+
+export interface IntegrationStatus {
+  system: string;
+  status: 'Online' | 'Offline' | 'Warning';
+  lastSync: string;
+  latency: string;
+}
+
+// Added missing SubjectMapping interface for the accounting module
+export interface SubjectMapping {
+  id: string;
+  businessType: string;
+  subjectCode: string;
+  subjectName: string;
+  direction: 'Debit' | 'Credit';
+  description: string;
 }
